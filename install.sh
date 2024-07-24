@@ -134,10 +134,10 @@ install_marzban() {
 
     colorized_echo blue "Fetching compose file"
     curl -sL "$FILES_URL_PREFIX/docker-compose.yml" -o "$APP_DIR/docker-compose.yml"
-    docker_file_path="/opt/marzban/docker-compose.yml"
+    docker_file_path="$APP_DIR/docker-compose.yml"
 
     while true; do
-        read -p "What version do you want to install? (e.g 0.5.2) Default: Install Latest: " marzban_version
+        read -p "Which version of Marzban do you want to install? (e.g 0.5.2) (Default Install latest): " marzban_version
 
         # If the user just presses Enter, set marzban_version to "latest"
         if [ -z "$marzban_version" ]; then
@@ -150,7 +150,7 @@ install_marzban() {
             else
                 sed -i "s|image: gozargah/marzban:.*|image: gozargah/marzban:v${marzban_version}|g" $docker_file_path
             fi
-            echo "Docker image updated to gozargah/marzban:$marzban_version"
+            echo "Installing v$marzban_version"
             break
         else
             echo "Invalid version format. Please enter a valid version (e.g. 0.5.2) or press Enter for the latest version."
